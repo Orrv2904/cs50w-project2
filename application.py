@@ -14,11 +14,15 @@ users = []
 @app.route("/")
 def index():
     # return "Project 2: TODO"
-    return render_template("index.html")
+    return render_template("login.html")
 
 @app.route("/chat")
 def chat():
     return render_template("chat.html")
+
+# @app.route("/login")
+# def login():
+#     return render_template("login.html")
 
 @socketio.on('create_room')
 def create_room(data):
