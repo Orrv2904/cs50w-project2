@@ -41,10 +41,15 @@ def get_users():
 def connect():
     emit('connection_success', {'message': 'Conexión exitosa'})  # Emite un evento de éxito de conexión
 
+# @socketio.on("message") 
+# def message(data):
+#   print(data)
+#   emit("message", data["message"],  broadcast=False, include_self=True, to=data["room"])
+
 @socketio.on("message") 
 def message(data):
   print(data)
-  emit("message", data["message"],  broadcast=False, include_self=True, to=data["room"])
+  emit("message", data["message"],  broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

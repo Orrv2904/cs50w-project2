@@ -123,29 +123,36 @@
         <div class="chat__messages">
             <div class="message">
                 <img src="../static/assets/user3.jpg" alt="avatar">
-                <div class="message__info">
+                <!-- <div class="message__info" id="root">
                     <h4>ManInBlack <span class="message__timestamp">04/28/2022</span></h4>
                     <p>Hello</p>
+                </div> -->
+                <div class="message__info">
+                    <h4>ManInBlack <span id="message_time" class="message__timestamp">04/28/2022</span></h4>
+                    <p id="root"></p>
                 </div>
             </div>
         </div>
 
         <div class="chat__input">
             <i class="fas fa-plus-circle fa-lg"></i>
-            <form>
-                <input class="sendMessage" type="text" placeholder="send message">
-                <button class="chat__inputButton" type="submit">Send</button>
-            </form>
+                <div class="msg">
+                    <input class="sendMessage" id="message-input" type="text" placeholder="send message">
+                <!-- <button class="chat__inputButton" type="button" id="send-message">Send</button> -->
+                </div>
             <div class="chat__inputIcons">
                 <i class="fas fa-gift fa-lg"></i>
                 <i class="fas fa-file-image fa-lg"></i>
                 <i class="fas fa-laugh fa-lg"></i>
-                <i class="fas fa-paper-plane"></i>
+                <button id="send-message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
 
     <script src="../static/scripts/chat.js"></script>
+    <script src="{{url_for('static', filename='scripts/socket.io.min.js')}}"></script>
 </body>
 
 </html>

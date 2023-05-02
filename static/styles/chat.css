@@ -345,7 +345,7 @@ img {
     color: lightgray;
 }
 
-.chat__input > form {
+/* .chat__input > form {
     flex: 1;
 }
 
@@ -356,10 +356,29 @@ img {
     outline-width: 0;
     color: #fff;
     width: 100%;
+} */
+
+.msg{
+    flex: 1;
+}
+
+.msg > input{
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    outline-width: 0;
+    color: #fff;
+    width: 100%;
 }
 
 .chat__inputButton {
-    display: none;
+    display: flex;
+}
+
+#send-message{
+    background-color: inherit;
+    border-color: transparent;
+    cursor: pointer;
 }
 
 .chat__inputIcons > i {
