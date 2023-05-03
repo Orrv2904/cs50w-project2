@@ -24,6 +24,17 @@ def chat():
 # def login():
 #     return render_template("login.html")
 
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
+    if request.method == 'POST':
+        nombre_usuario = request.form['username']
+        # Aquí se puede validar el nombre de usuario y almacenarlo en la sesión
+        session['username'] = nombre_usuario
+        flash('¡Registro exitoso!')
+        return redirect(url_for('/chat'))
+    return render_template('registro.html')
+
+
 @socketio.on('create_room')
 def create_room(data):
     room_name = data['roomName']

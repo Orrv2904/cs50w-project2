@@ -139,3 +139,4 @@ size: 170,
 value: 'Paste a link or text over here to create a QR Code for it'
 });
 })();
+
