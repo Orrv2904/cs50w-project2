@@ -1,390 +1,165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./static/images/charlar.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>Flack IO</title>
-    <link rel="stylesheet" href="../static/styles/chat.css" />
-    <script src="https://kit.fontawesome.com/222cea3eed.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <title>Flack IO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.1/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+  <link rel="shortcut icon" href="../static/images/charlar.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/emoji-mart/css/emoji-mart.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://unpkg.com/emoji-mart/dist/emoji-mart.js"></script>
 </head>
 
 <body>
-    <!-- component -->
-<div class="flex h-screen antialiased text-gray-800">
-    <div class="flex flex-row h-full w-full overflow-x-hidden">
-      <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
-        <div class="flex flex-row items-center justify-center h-12 w-full">
-          <div
-            class="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-              ></path>
-            </svg>
-          </div>
-          <div class="ml-2 font-bold text-2xl">Flack IO</div>
-        </div>
-        
-        <div class="flex flex-col mt-8">
-          <div class="flex flex-row items-center justify-between text-xs">
-            <span class="font-bold">Active Conversations</span>
-            <span
-              class="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"
-              >4</span
-            >
-          </div>
-          <div class="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
-            <button
-              class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-            >
-              <div
-                class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full"
-              >
-                H
-              </div>
-              <div class="ml-2 text-sm font-semibold">Henry Boyd</div>
-            </button>
-            <button
-              class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-            >
-              <div
-                class="flex items-center justify-center h-8 w-8 bg-gray-200 rounded-full"
-              >
-                M
-              </div>
-              <div class="ml-2 text-sm font-semibold">Marta Curtis</div>
-              <div
-                class="flex items-center justify-center ml-auto text-xs text-white bg-red-500 h-4 w-4 rounded leading-none"
-              >
-                2
-              </div>
-            </button>
-            <button
-              class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-            >
-              <div
-                class="flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full"
-              >
-                P
-              </div>
-              <div class="ml-2 text-sm font-semibold">Philip Tucker</div>
-            </button>
-            <button
-              class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-            >
-              <div
-                class="flex items-center justify-center h-8 w-8 bg-pink-200 rounded-full"
-              >
-                C
-              </div>
-              <div class="ml-2 text-sm font-semibold">Christine Reid</div>
-            </button>
-            <button
-              class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-            >
-              <div
-                class="flex items-center justify-center h-8 w-8 bg-purple-200 rounded-full"
-              >
-                J
-              </div>
-              <div class="ml-2 text-sm font-semibold">Jerry Guzman</div>
-            </button>
-          </div>
-
+  <nav class="navbar is-dark">
+    <div class="container">
+      <div class="navbar-brand">
+        <span class="navbar-item is-size-4">Flack IO</span>
+        <div class="navbar-burger burger" data-target="navMenu">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
-      <div class="flex flex-col flex-auto h-full p-6">
-        <div
-          class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
-        >
-          <div class="flex flex-col h-full overflow-x-auto mb-4">
-            <div class="flex flex-col h-full">
-              <div class="grid grid-cols-12 gap-y-2">
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>Hey How are you today?</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Vel ipsa commodi illum saepe numquam maxime
-                        asperiores voluptate sit, minima perspiciatis.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>I'm ok what about you?</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>Lorem ipsum dolor sit amet !</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                      </div>
-                      <div
-                        class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500"
-                      >
-                        Seen
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Perspiciatis, in.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
-                    >
-                      <div class="flex flex-row items-center">
-                        <button
-                          class="flex items-center justify-center bg-indigo-600 hover:bg-indigo-800 rounded-full h-8 w-10"
-                        >
-                          <svg
-                            class="w-6 h-6 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="1.5"
-                              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                            ></path>
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="1.5"
-                              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </button>
-                        <div class="flex flex-row items-center space-x-px ml-4">
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-4 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-10 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-10 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-12 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-10 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-6 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-5 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-4 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-3 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-10 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-10 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-1 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-1 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-8 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-2 w-1 bg-gray-500 rounded-lg"></div>
-                          <div class="h-4 w-1 bg-gray-500 rounded-lg"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
-          >
-            <div>
-              <button
-                class="flex items-center justify-center text-gray-400 hover:text-gray-600"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                  ></path>
+      <!-- <div class="navbar-menu" id="navMenu">
+				<div class="navbar-end">
+					<a class="navbar-item">Profile</a>
+				</div>
+			</div> -->
+    </div>
+  </nav>
+  <div class="columns is-mobile">
+    <div class="column is-paddingless is-3-desktop is-4-tablet is-2-mobile sidebar-user hero is-fullheight">
+      <div class="top-field is-hidden-mobile has-text-centered">
+        <form>
+          <div class="field">
+            <p class="control has-icons-right">
+              <input class="input" type="search" placeholder="Search...">
+              <span class="icon is-small is-right">
+                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z"
+                    clip-rule="evenodd" />
+                  <path fill-rule="evenodd"
+                    d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
+                    clip-rule="evenodd" />
                 </svg>
-              </button>
+              </span>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="list">
+        <a class="list-item active box">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48 is-32x32-mobile">
+                <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
+              </figure>
             </div>
-            <div class="flex-grow ml-4">
-              <div class="relative w-full">
-                <input
-                  type="text"
-                  class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
-                />
-                <button
-                  class="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
-                >
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
-                  </svg>
-                </button>
+            <div class="media-content is-hidden-mobile">
+              <div class="content">
+                <p>
+                  <strong>Room Name</strong>
+                  <br><small>...</small>
+                </p>
               </div>
             </div>
-            <div class="ml-4">
-              <button
-                class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
-              >
-                <span>Send</span>
-                <span class="ml-2">
-                  <svg
-                    class="w-4 h-4 transform rotate-45 -mt-px"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    ></path>
-                  </svg>
-                </span>
-              </button>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="column is-9-desktop is-8-tablet is-10-mobile is-paddingless">
+      <nav class="navbar has-shadow user-nav">
+        <div class="navbar-start">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>Room name</strong>
+                  <br>
+                  <small>...</small>
+                </p>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="navbar-end">
+          <a class="navbar-item">
+            <span class="icon is-size-2">
+              <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 01-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 01.872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 012.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 012.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 01.872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 01-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 01-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 100-5.86 2.929 2.929 0 000 5.858z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+          </a>
+          <a class="navbar-item">
+            <span class="icon is-size-2">
+              <svg class="bi bi-info-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M8 16A8 8 0 108 0a8 8 0 000 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content columns: One for chat window another for profile -->
+      <div class="columns">
+        <div class="column is-8 is-12-mobile is-flex hero is-fullheight message-window">
+          <div class="flex-item-1">example message</div>
+          <div class="flex-item-2">
+            <form>
+              <div class="field has-addons">
+                <div class="control">
+                  <input class="input" type="text" id="emojiarea" placeholder="Type your message...">
+                </div>
+                <div class="control">
+                  <!-- <textarea id="textarea" cols="30" rows="10"></textarea> -->
+                  <button type="button" class="button">
+                    <svg height="36px" width="36px" viewBox="0 0 36 36">
+                      <g fill="none" fill-rule="evenodd">
+                        <g>
+                          <polygon points="0 36 36 36 36 0 0 0"></polygon>
+                          <path
+                            d="M31.1059281,19.4468693 L10.3449666,29.8224462 C8.94594087,30.5217547 7.49043432,29.0215929 8.17420251,27.6529892 C8.17420251,27.6529892 10.7473302,22.456697 11.4550902,21.0955966 C12.1628503,19.7344961 12.9730756,19.4988922 20.4970248,18.5264632 C20.7754304,18.4904474 21.0033531,18.2803547 21.0033531,17.9997309 C21.0033531,17.7196073 20.7754304,17.5095146 20.4970248,17.4734988 C12.9730756,16.5010698 12.1628503,16.2654659 11.4550902,14.9043654 C10.7473302,13.5437652 8.17420251,8.34697281 8.17420251,8.34697281 C7.49043432,6.9788693 8.94594087,5.47820732 10.3449666,6.1775158 L31.1059281,16.553593 C32.298024,17.1488555 32.298024,18.8511065 31.1059281,19.4468693"
+                            fill="#363636"></path>
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="column is-hidden-mobile sidebar-profile">
+          Profile Section
         </div>
       </div>
     </div>
   </div>
-
-    <script src="../static/scripts/chat.js"></script>
-    <script src="{{url_for('static', filename='scripts/socket.io.min.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(`#emojiarea`).emojioneArea({
+      pickerPosition: 'top'
+    });
+  </script>
 </body>
 
 </html>
