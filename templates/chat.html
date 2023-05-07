@@ -14,6 +14,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://unpkg.com/emoji-mart/dist/emoji-mart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -149,11 +150,12 @@
             <form>
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input emojiarea" type="text" id="message-input" placeholder="Type your message...">
+                  <input class="input emojiarea" type="text" id="message-input" placeholder="Type your message..."
+                    onkeydown="handleKeyDown(event)">
                 </div>
                 <div class="control">
                   <!-- <textarea id="textarea" cols="30" rows="10"></textarea> -->
-                  <button type="button" class="button is-primary" id="send-message">
+                  <button type="button" class="button" id="send-message" value="Enviar">
                     <svg height="36px" width="36px" viewBox="0 0 36 36">
                       <g fill="none" fill-rule="evenodd">
                         <g>
@@ -201,6 +203,10 @@
   </div>
 
 
+
+
+
+
   <!-- Modal triger -->
   <script>
     const openModalButton = document.querySelector('#open-modal-button');
@@ -227,6 +233,53 @@
   </script>
   <!-- end modal troger -->
 
+  <!-- messages -->
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const socket = io();
+      let room;
+
+      socket.on("mensaje", (message) => {
+        document.querySelector("#root").append(message);
+        document.querySelector("#root").innerHTML += "<br/>";
+      });
+
+      const send_message = () => {
+        const message = document.querySelector("#message-input").value;
+        console.log("Clicked send message button");
+        console.log("Message value:", message);
+        socket.emit("message", { message, room });
+        document.querySelector("#message-input").value = "";
+      };
+
+      document.querySelector("#send-message").onclick = send_message;
+
+      document.querySelector("#message-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          send_message();
+        }
+      });
+
+      socket.on("message", (data) => {
+        console.log(data);
+        document.querySelector("#root").innerText += data;
+        document.querySelector("#root").innerHTML += "<br/>";
+      });
+    });
+  </script> -->
+  <!-- end messages -->
+
+
+  <!-- other scripts -->
+  <script src="{{url_for('static', filename='socket.io.min.js')}}"></script>
+  <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
+    integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <!-- emoji -->
   <script>
     $(`.emojiarea`).emojioneArea({
@@ -234,66 +287,6 @@
     });
   </script>
   <!-- end emoji -->
-
-  <!-- messages -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const socket = io();
-
-      let room;
-
-      socket.on("mensaje", (message) => {
-        document.querySelector("#root").append(message);
-        document.querySelector("#root").innerHTML += "<br/>"
-      })
-
-      const send_message = document.querySelector("#send-message");
-
-      send_message.onclick = () => {
-        const message = document.querySelector("#message-input").value;
-        console.log("Clicked send message button");
-        console.log("Message value:", message);
-        // console.log('test');
-
-        console.log(message);
-
-        socket.emit("message", { message, room });
-        document.querySelector("#message-input").value = '';
-
-      }
-
-      socket.on("message", data => {
-        console.log(data);
-        document.querySelector("#root").innerText += data;
-        document.querySelector("#root").innerHTML += "<br/>";
-      })
-    })
-  </script>
-  <!-- end messages -->
-
-  <!-- script to validate input char -->
-  <script>
-    const messageInput = document.getElementById("message-input");
-    const sendButton = document.getElementById("send-message");
-
-    messageInput.addEventListener("input", function () {
-      if (messageInput.value.trim().length === 0) {
-        sendButton.disabled = true;
-      } else {
-        sendButton.disabled = false;
-      }
-    });
-  </script>
-  <!-- end script v input -->
-
-  <!-- other scripts -->
-  <script src="{{url_for('static', filename='socket.io.min.js')}}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
-    integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
 </body>
 
