@@ -13,9 +13,11 @@
     integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://unpkg.com/emoji-mart/dist/emoji-mart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
 </head>
 
 <body>
+  <!-- Navbar -->
   <nav class="navbar is-dark">
     <div class="container">
       <div class="navbar-brand">
@@ -33,6 +35,8 @@
 			</div> -->
     </div>
   </nav>
+  <!--  endnavbar  -->
+
   <div class="columns is-mobile">
     <div class="column is-paddingless is-3-desktop is-4-tablet is-2-mobile sidebar-user hero is-fullheight">
       <div class="top-field is-hidden-mobile has-text-centered">
@@ -65,25 +69,30 @@
           </div>
         </form>
       </div>
-      <div class="list">
-        <a class="list-item active box">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48 is-32x32-mobile">
-                <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
-              </figure>
-            </div>
-            <div class="media-content is-hidden-mobile">
-              <div class="content">
-                <p>
-                  <strong>Room Name</strong>
-                  <br><small>...</small>
-                </p>
+
+      <!-- room -->
+      <section id="rooms">
+        <div class="list">
+          <a class="list-item active box">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48 is-32x32-mobile">
+                  <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
+                </figure>
+              </div>
+              <div class="media-content is-hidden-mobile">
+                <div class="content">
+                  <p>
+                    <strong>Room Name</strong>
+                    <br><small>...</small>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </div>
+          </a>
+        </div>
+      </section>
+      <!-- end room -->
 
     </div>
     <div class="column is-9-desktop is-8-tablet is-10-mobile is-paddingless">
@@ -133,8 +142,8 @@
       <!-- Main Content columns: One for chat window another for profile -->
       <div class="columns">
         <div class="column is-8 is-12-mobile is-flex hero is-fullheight message-window">
-          <div class="flex-item-1" id="root">
-
+          <div class="flex-item-1">
+            <p id="root"></p>
           </div>
           <div class="flex-item-2">
             <form>
@@ -180,56 +189,112 @@
         <div class="field">
           <label class="label">Nombre de la sala</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Escribe el nombre de la sala aquí">
+            <input class="input" id="roomNameInput" type="text" placeholder="Escribe el nombre de la sala aquí">
           </div>
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success">Guardar</button>
+        <button class="button is-success" id="saveRoomBtn">Guardar</button>
         <button class="button" id="cancel-modal-button">Cancelar</button>
       </footer>
     </div>
   </div>
-  
-  
+
+
+  <!-- Modal triger -->
   <script>
     const openModalButton = document.querySelector('#open-modal-button');
     const modal = document.querySelector('#my-modal');
-  
+
     openModalButton.onclick = () => {
       modal.classList.toggle('is-active');
     }
-  
+
     const closeModalButton = document.querySelector('#close-modal-button');
     const cancelButton = document.querySelector('.modal-card-foot button.button:last-child');
-  
+
     closeModalButton.onclick = () => {
       modal.classList.toggle('is-active');
     }
-  
+
     cancelButton.onclick = () => {
       modal.classList.toggle('is-active');
     }
-  
+
     document.querySelector("#modal-form").addEventListener("submit", function (event) {
       event.preventDefault();
     });
   </script>
+  <!-- end modal troger -->
 
-
-
-
-  <script src="{{ url_for('static', filename='scripts/socket.io.min.js') }}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
-    integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- emoji -->
   <script>
     $(`.emojiarea`).emojioneArea({
       pickerPosition: 'top'
     });
   </script>
+  <!-- end emoji -->
+
+  <!-- messages -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const socket = io();
+
+      let room;
+
+      socket.on("mensaje", (message) => {
+        document.querySelector("#root").append(message);
+        document.querySelector("#root").innerHTML += "<br/>"
+      })
+
+      const send_message = document.querySelector("#send-message");
+
+      send_message.onclick = () => {
+        const message = document.querySelector("#message-input").value;
+        console.log("Clicked send message button");
+        console.log("Message value:", message);
+        // console.log('test');
+
+        console.log(message);
+
+        socket.emit("message", { message, room });
+        document.querySelector("#message-input").value = '';
+
+      }
+
+      socket.on("message", data => {
+        console.log(data);
+        document.querySelector("#root").innerText += data;
+        document.querySelector("#root").innerHTML += "<br/>";
+      })
+    })
+  </script>
+  <!-- end messages -->
+
+  <!-- script to validate input char -->
+  <script>
+    const messageInput = document.getElementById("message-input");
+    const sendButton = document.getElementById("send-message");
+
+    messageInput.addEventListener("input", function () {
+      if (messageInput.value.trim().length === 0) {
+        sendButton.disabled = true;
+      } else {
+        sendButton.disabled = false;
+      }
+    });
+  </script>
+  <!-- end script v input -->
+
+  <!-- other scripts -->
+  <script src="{{url_for('static', filename='socket.io.min.js')}}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
+    integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 </body>
 
 </html>

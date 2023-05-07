@@ -20,6 +20,10 @@ def index():
 def chat():
     return render_template("chat.html")
 
+@app.route("/c")
+def c():
+    return render_template("01.html")
+
 # @app.route("/login")
 # def login():
 #     return render_template("login.html")
