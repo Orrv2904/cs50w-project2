@@ -15,6 +15,12 @@
   <script src="https://unpkg.com/emoji-mart/dist/emoji-mart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -72,8 +78,8 @@
       </div>
 
       <!-- room -->
-      <section id="rooms">
-        <div class="list">
+      <section id="roomList">
+        <!-- <div class="list">
           <a class="list-item active box">
             <div class="media">
               <div class="media-left">
@@ -91,7 +97,7 @@
               </div>
             </div>
           </a>
-        </div>
+        </div> -->
       </section>
       <!-- end room -->
 
@@ -274,6 +280,7 @@
   <!-- other scripts -->
   <script src="{{url_for('static', filename='socket.io.min.js')}}"></script>
   <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
