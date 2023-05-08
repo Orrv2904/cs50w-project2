@@ -19,13 +19,14 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar is-dark">
+  <!-- <nav class="navbar is-dark">
     <div class="container">
       <div class="navbar-brand">
         <span class="navbar-item is-size-4">Flack IO</span>
@@ -35,13 +36,34 @@
           <span></span>
         </div>
       </div>
-      <!-- <div class="navbar-menu" id="navMenu">
-				<div class="navbar-end">
-					<a class="navbar-item">Profile</a>
-				</div>
-			</div> -->
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end">
+          <a class="navbar-item" id="open-modal-button">Crear nueva sala</a>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+  
+  <nav class="bg-gray-700 border-gray-200">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="" class="flex items-center">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="rounded-full w-15 h-15" alt="Flowbite Logo" />
+          <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Flack IO</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="#" id="open-modal-button" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">crear sala</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
+
   <!--  endnavbar  -->
 
   <div class="columns is-mobile">
@@ -64,14 +86,14 @@
               </span>
             </p>
             <div class="control">
-              <button type="button" class="button is-rounded is-info is-grouped-right" id="open-modal-button">
+              <!-- <button type="button" class="button is-rounded is-info is-grouped-right">
                 <svg class="bi bi-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd"
                     d="M8 3.5a.5.5 0 00-.5.5v3H4.5a.5.5 0 000 1H7v3.5a.5.5 0 001 0V8h3.5a.5.5 0 000-1H8V4a.5.5 0 00-.5-.5z"
                     clip-rule="evenodd" />
                 </svg>
-              </button>
+              </button> -->
             </div>
           </div>
         </form>
@@ -280,6 +302,8 @@
   <!-- other scripts -->
   <script src="{{url_for('static', filename='socket.io.min.js')}}"></script>
   <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+  <script src="{{url_for('static', filename='scripts/nav.js')}}"></script>
+  <script src="{{url_for('static', filename='scripts/rooms.js')}}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>

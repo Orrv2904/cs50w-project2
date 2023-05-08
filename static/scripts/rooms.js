@@ -8,22 +8,25 @@ $(document).ready(function () {
     for (var i = 0; i < existingRooms.length; i++) {
         var roomName = existingRooms[i];
         var roomHtml = `
-    <li class="active">
-        <div class="d-flex bd-highlight" id="roomInfoContainer">
-            <div class="img_cont">
-                <img src="https://cdn.iconscout.com/icon/free/png-512/free-chat-message-notification-bubble-talk-15-17196.png?f=avif&w=256"
-                    class="rounded-circle user_img">
-                <span class="online_icon"></span>
+        <div class="list">
+        <a class="list-item active box">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48 is-32x32-mobile">
+                <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
+              </figure>
             </div>
-            <div class="user_info">
-                <span>${roomName}</span>
-                <p>Status</p>
+            <div class="media-content is-hidden-mobile">
+              <div class="content">
+                <p>
+                  <strong>Room Name</strong>
+                  <br><small>...</small>
+                </p>
+              </div>
             </div>
-            <div class="user_info">
-                <button class="btn btn-success btn-sm enterRoomBtn">Enter</button>
-            </div>
-        </div>
-    </li>
+          </div>
+        </a>
+      </div>
 `;
         $('#roomList').append(roomHtml);
     }
@@ -61,22 +64,25 @@ $(document).ready(function () {
 
         // Crear una nueva repetición de sala en el HTML
         var roomHtml = `
-    <li class="active">
-        <div class="d-flex bd-highlight" id="roomInfoContainer">
-            <div class="img_cont">
-                <img src="https://cdn.iconscout.com/icon/free/png-512/free-chat-message-notification-bubble-talk-15-17196.png?f=avif&w=256"
-                    class="rounded-circle user_img">
-                <span class="online_icon"></span>
+        <div class="list">
+        <a class="list-item active box">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48 is-32x32-mobile">
+                <img src="https://via.placeholder.com/150" alt="Image" class="is-rounded">
+              </figure>
             </div>
-            <div class="user_info">
-                <span>${roomName}</span>
-                <p>Status</p>
+            <div class="media-content is-hidden-mobile">
+              <div class="content">
+                <p>
+                  <strong>Room Name</strong>
+                  <br><small>...</small>
+                </p>
+              </div>
             </div>
-            <div class="user_info">
-                <button class="btn btn-success btn-sm enterRoomBtn">Enter</button>
-            </div>
-        </div>
-    </li>
+          </div>
+        </a>
+      </div>
 `;
 
         $('#roomList').on('click', '.enterRoomBtn', function () {
