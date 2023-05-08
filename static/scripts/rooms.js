@@ -100,7 +100,24 @@ $(document).ready(function () {
         localStorage.setItem('rooms', JSON.stringify(existingRooms));
 
         // Mostrar una alerta usando SweetAlert para indicar que la sala se creó exitosamente
-        swal("¡Sala creada!", `Se ha creado la sala "${roomName}" exitosamente.`, "success");
+        // swal("¡Sala creada!", `Se ha creado la sala "${roomName}" exitosamente.`, "success");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: `Sala ${roomName} exitosamente`
+        })
+        
     });
 
     // Manejador de eventos para el botón de unirse a una sala existente
