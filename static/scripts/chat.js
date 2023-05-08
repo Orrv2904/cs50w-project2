@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     send_message();
+    document.querySelector(".emojionearea-editor").innerHTML = "";
+    // var x = document.getElementById('message-input').autofocus;
+    // document.querySelector(".emojionearea-editor").innerHTML = x;
+    console.log("prueba2");
   };
 
   document.querySelector("#message-input").addEventListener("keydown", (event) => {
