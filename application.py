@@ -20,6 +20,9 @@ def index():
 def chat():
     return render_template("chat.html")
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 # @app.route("/login")
 # def login():
