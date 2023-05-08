@@ -19,7 +19,7 @@ $(document).ready(function () {
             <div class="media-content is-hidden-mobile">
               <div class="content">
                 <p>
-                  <strong>Room Name</strong>
+                  <strong>${roomName}</strong>
                   <br><small>...</small>
                 </p>
               </div>
@@ -75,7 +75,7 @@ $(document).ready(function () {
             <div class="media-content is-hidden-mobile">
               <div class="content">
                 <p>
-                  <strong>Room Name</strong>
+                  <strong>${roomName}</strong>
                   <br><small>...</small>
                 </p>
               </div>
