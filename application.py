@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, get_flashed_messages
 from flask_socketio import SocketIO, emit
 from dotenv import load_dotenv
+import json
 load_dotenv()
 
 app = Flask(__name__)
@@ -36,6 +37,11 @@ def register():
     username = request.form['username']
     session['username'] = username
     return redirect(url_for('chat'))
+
+@socketio.on('cargar_rooms')
+def cargar_rooms(data):
+    lista_rooms = rooms
+    emit('cargar_rooms2', lista_rooms)
 
 
 

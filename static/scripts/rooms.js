@@ -1,7 +1,49 @@
 // Script to create rooms
 
+
 $(document).ready(function () {
   var socket = io();
+
+
+    socket.emit('cargar_rooms', "cargar datos");
+    socket.on("cargar_rooms2", (data) => {
+      console.log(data);
+
+      let list_room = $('#roomList')
+      let objetoJSON = data;
+    
+      for (let clave in objetoJSON) {
+        console.log(clave);
+        var roomName = clave;
+        var roomHtml = `
+            <div class="list" id="${roomName}" value="${roomName}">
+            <a class="list-item active box">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48 is-32x32-mobile">
+                    <img
+                    alt="avatar" class="is-rounded"
+                    src="https://api.dicebear.com/6.x/identicon/svg?seed=${roomName}"
+                  />
+                  </figure>
+                </div>
+                <div class="media-content is-hidden-mobile">
+                  <div class="content">
+                    <p>
+                      <strong>${roomName}</strong>
+                      <br><small>...</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+    `;
+        $('#roomList').append(roomHtml);
+      }
+
+    });
+  
 
   // Cargar las salas existentes desde el localStorage
   var existingRooms = JSON.parse(localStorage.getItem('rooms')) || [];
@@ -41,15 +83,20 @@ $(document).ready(function () {
 
   // Manejador de eventos para el botón #saveRoomBtn
   $('#saveRoomBtn').on('click', function () {
+
+
+    
     // Obtener el nombre de la sala del input del modal
     var roomName = $('#roomNameInput').val();
     if (roomName.trim() === '') {
+
       // Validar que se haya ingresado un nombre de sala
       swal("¡Error!", "Por favor, ingrese un nombre de sala válido.", "error");
       return;
     }
 
     // Verificar si la sala ya existe en el localStorage
+
     if (existingRooms.includes(roomName)) {
       swal("¡Error!", "El nombre de sala ya está en uso. Por favor, ingrese un nombre de sala único.", "error");
       return;
@@ -102,8 +149,10 @@ $(document).ready(function () {
     console.log('Sala creada:', roomName); // Agregar un console.log para verificar
 
     // Guardar la sala en el localStorage
-    existingRooms.push(roomName);
-    localStorage.setItem('rooms', JSON.stringify(existingRooms));
+    // existingRooms.push(roomName);
+    // localStorage.setItem('rooms', JSON.stringify(existingRooms));
+
+
 
     // Mostrar una alerta usando SweetAlert para indicar que la sala se creó exitosamente
     // swal("¡Sala creada!", `Se ha creado la sala "${roomName}" exitosamente.`, "success");
@@ -137,6 +186,6 @@ $(document).ready(function () {
     var roomId = $(this).attr('id');
     window.location.href = '/rooms/' + roomId;
   });
-  
+
 
 });
