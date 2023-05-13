@@ -11,16 +11,17 @@ socketio = SocketIO(app)
 rooms = {"global": [],
          "Diego": []}
 users = []
+menssages = []
 
 @app.route("/")
 def index():
     # return "Project 2: TODO"
-    global rooms
-    return render_template("login.html", rooms=rooms)
+    return render_template("login.html")
 
 @app.route("/chat")
 def chat():
-    return render_template("chat.html")
+    global rooms
+    return render_template("chat.html", rooms=rooms)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -30,23 +31,20 @@ def page_not_found(e):
 # def login():
 #     return render_template("login.html")
 
-@app.route('/registro', methods=['GET', 'POST'])
-def registro():
-    if request.method == 'POST':
-        nombre_usuario = request.form['username']
-        # Aquí se puede validar el nombre de usuario y almacenarlo en la sesión
-        session['username'] = nombre_usuario
-        flash('¡Registro exitoso!')
-        return redirect(url_for('/chat'))
-    return render_template('registro.html')
+@app.route('/register', methods=['POST'])
+def register():
+    username = request.form['username']
+    session['username'] = username
+    return redirect(url_for('chat'))
+
 
 
 @socketio.on('create_room')
 def create_room(data):
     room_name = data['roomName']
-    rooms[room_name]=[] # Agrega el nombre de la sala a la lista
+    rooms[room_name]=[]
     emit('room_created', {'roomName': room_name}, broadcast=True)
-    print(rooms)  # Emite un evento para notificar a los clientes que se ha creado una sala.
+    print(rooms)
     print('Sala creada:', room_name)
 
 @socketio.on('register_user')
@@ -63,6 +61,19 @@ def get_users():
 def connect():
     emit('connection_success', {'message': 'Conexión exitosa'})  # Emite un evento de éxito de conexión
 
+@socketio.on('disconnect')
+def disconnect():
+  emit('user_disconnected', {'userId': request.sid})
+
+
+@socketio.on('join_room')
+def join_room(data):
+  room_name = data['roomName']
+  join_room(room_name)
+  emit('room_joined', {'roomName': room_name}, room=room_name)
+
+
+
 # @socketio.on("message") 
 # def message(data):
 #   print(data)
@@ -72,6 +83,17 @@ def connect():
 def message(data):
   print(data)
   emit("message", data["message"],  broadcast=True)
+
+@socketio.on('new_message')
+def new_message(data):
+    room_name = data['roomName']
+    message = data['message']
+    if room_name not in rooms:
+        rooms[room_name] = []
+    rooms[room_name].append(message)
+    emit('message_sent', {'message': message}, room=room_name)
+    print('Mensaje enviado:', message)
+
 
 # @socketio.on("msg")
 # def msg(rooms):

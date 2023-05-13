@@ -133,4 +133,10 @@ $(document).ready(function () {
     console.log('Unirse a la sala:', roomName); // Agregar un console.log para verificar
   });
 
+  $('#roomList').on('click', '.list-item', function () {
+    var roomId = $(this).attr('id');
+    window.location.href = '/rooms/' + roomId;
+  });
+  
+
 });
