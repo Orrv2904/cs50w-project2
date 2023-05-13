@@ -1,23 +1,25 @@
-html, body {
+html,
+body {
 	overflow: hidden;
 	animation: fade-in 0.5s ease-in-out;
 }
 
 @keyframes fade-in {
 	from {
-	  opacity: 0;
+		opacity: 0;
 	}
+
 	to {
-	  opacity: 1;
+		opacity: 1;
 	}
-  }
+}
 
 *::-webkit-scrollbar {
 	width: 10px;
 }
 
 *::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+	box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
 	border-radius: 23111998px;
 }
 
@@ -116,23 +118,23 @@ html, body {
 
 .message-window {
 	min-height: calc(100vh - 76px) !important;
-    display:flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: flex-start;
 }
 
 .flex-item-1 {
-    flex-grow: 1;
+	flex-grow: 1;
 }
-  
+
 .flex-item-2 {
 	margin-bottom: 15px;
 	width: 100%;
-    height: 80px;
-    padding: 10px 12px;
+	height: 80px;
+	padding: 10px 12px;
 }
 
 .flex-item-2 .field.has-addons .control:first-child {
@@ -161,12 +163,12 @@ html, body {
 	border-left: 1px solid #dedede;
 }
 
-#search{
+#search {
 	width: 375px;
 }
 
 .modal {
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0, 0, 0, 0.5);
 	display: none;
 	height: 100%;
 	left: 0;
@@ -175,17 +177,17 @@ html, body {
 	width: 100%;
 	z-index: 20;
 	transition: visibility 0s, opacity 0.5s ease-out;
-  }
-  
-  .modal-background {
-	background-color: rgba(0,0,0,0.5);
+}
+
+.modal-background {
+	background-color: rgba(0, 0, 0, 0.5);
 	height: 100%;
 	position: absolute;
 	width: 100%;
 	z-index: -1;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
 	background-color: white;
 	border-radius: 5px;
 	margin: auto;
@@ -194,9 +196,9 @@ html, body {
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
-  }
-  
-  .modal-close {
+}
+
+.modal-close {
 	background-color: transparent;
 	border: none;
 	height: 40px;
@@ -204,34 +206,59 @@ html, body {
 	right: 10px;
 	top: 10px;
 	width: 40px;
-  }
+}
 
-  .modal.is-active {
+.modal.is-active {
 	visibility: visible;
 	opacity: 1;
-  }
-  
-  .modal-close:before, .modal-close:after {
+}
+
+.modal-close:before,
+.modal-close:after {
 	background-color: white;
 	content: '';
 	height: 2px;
 	position: absolute;
 	top: 50%;
 	width: 20px;
-  }
-  
-  .modal-close:before {
+}
+
+.modal-close:before {
 	transform: rotate(45deg);
-  }
-  
-  .modal-close:after {
+}
+
+.modal-close:after {
 	transform: rotate(-45deg);
-  }
-  
-  .title {
+}
+
+.title {
 	font-size: 1.5rem;
 	margin-bottom: 20px;
-  }
-  
+}
 
-  
+#roomList {
+    height: 780px;
+    overflow-y: scroll;
+}
+
+.scrollable::-webkit-scrollbar {
+	width: 8px;
+	/* Ancho del scrollbar */
+}
+
+.scrollable::-webkit-scrollbar-track {
+	background-color: #f2f2f2;
+	/* Color del track */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	/* Color del thumb */
+	border-radius: 4px;
+	/* Radio de borde del thumb */
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+	background-color: #aaa;
+	/* Color del thumb al pasar el mouse por encima */
+}

@@ -97,7 +97,7 @@ $(document).ready(function () {
 
     // Verificar si la sala ya existe en el localStorage
 
-    if (existingRooms.includes(roomName)) {
+    if ($('#' + roomName.replace(/\s/g, '')).length > 0 || roomName.trim() === '') {
       swal("¡Error!", "El nombre de sala ya está en uso. Por favor, ingrese un nombre de sala único.", "error");
       return;
     }
