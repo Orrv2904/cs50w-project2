@@ -187,5 +187,29 @@ $(document).ready(function () {
     window.location.href = '/rooms/' + roomId;
   });
 
+  // Función para buscar una sala por nombre y mostrar solo las coincidencias
+  $('#search').on('input', function () {
+    var searchValue = $(this).val().toLowerCase(); // Convertir a minúsculas para comparar
+  
+    $('#roomList .list-item').each(function () {
+      var roomName = $(this).find('strong').text().toLowerCase();
+      if (roomName.includes(searchValue)) {
+        $(this).slideDown(); // Mostrar si hay una coincidencia
+        if (roomName === searchValue) {
+          $(this).insertBefore($('#roomList .list-item:first')); // Mover la sala encontrada al principio
+        }
+      } else {
+        $(this).slideUp(); // Ocultar si no hay una coincidencia
+      }
+    });
+  
+    // Si el input está vacío, volver al estado original
+    if (searchValue === '') {
+      $('#roomList .list-item').slideDown();
+    }
+  });
+  
+
+
 
 });
