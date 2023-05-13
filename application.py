@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, get_flashed_messages
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
 import json
 load_dotenv()
@@ -42,6 +42,24 @@ def register():
 def cargar_rooms(data):
     lista_rooms = rooms
     emit('cargar_rooms2', lista_rooms)
+
+@socketio.on('unirse')
+def unirse(data):
+    canal = data['canal']
+    join_room(canal)
+    # Agregar la sala a la lista de salas
+    rooms.append(canal)
+    # Emitir evento de usuario unido a la sala
+    emit('usuario_unido', {'sala': canal, 'mensaje': 'Un usuario ha ingresado a la sala.'}, room=canal)
+
+@socketio.on('abandonar')
+def abandonar(data):
+    canal = data['canal']
+    leave_room(canal)
+    # Eliminar la sala de la lista de salas
+    rooms.remove(canal)
+    # Emitir evento de usuario abandonando la sala
+    emit('usuario_abandonado', {'sala': canal, 'mensaje': 'Un usuario ha salido de la sala.'}, room=canal)
 
 
 
