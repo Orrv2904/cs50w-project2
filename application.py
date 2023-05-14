@@ -10,9 +10,10 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 rooms = {"global": [],
-         "Diego": []}
+         "Web": [],
+         "CS": []}
 users = []
-menssages = []
+messages = {}
 
 @app.route("/")
 def index():
@@ -43,23 +44,25 @@ def cargar_rooms(data):
     lista_rooms = rooms
     emit('cargar_rooms2', lista_rooms)
 
-@socketio.on('unirse')
-def unirse(data):
-    canal = data['canal']
-    join_room(canal)
-    # Agregar la sala a la lista de salas
-    rooms.append(canal)
-    # Emitir evento de usuario unido a la sala
-    emit('usuario_unido', {'sala': canal, 'mensaje': 'Un usuario ha ingresado a la sala.'}, room=canal)
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', to=room)
 
-@socketio.on('abandonar')
-def abandonar(data):
-    canal = data['canal']
-    leave_room(canal)
-    # Eliminar la sala de la lista de salas
-    rooms.remove(canal)
-    # Emitir evento de usuario abandonando la sala
-    emit('usuario_abandonado', {'sala': canal, 'mensaje': 'Un usuario ha salido de la sala.'}, room=canal)
+# @socketio.on("join_room")
+# def Join(room):
+#     join_room(room)
+#     emit('mensaje', f"Un usuario ah ingresado a la Sala {room}", broadcast=False,
+#         include_self=False, to=room)
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', to=room)
 
 
 
@@ -77,9 +80,7 @@ def register_user(data):
     users.append(username)
     emit('registration_successful', {'username': username})
 
-@socketio.on('get_users')
-def get_users():
-    emit('user_list', {'users': users})
+
 
 @socketio.on('connect')
 def connect():
@@ -90,11 +91,21 @@ def disconnect():
   emit('user_disconnected', {'userId': request.sid})
 
 
-@socketio.on('join_room')
-def join_room(data):
-  room_name = data['roomName']
-  join_room(room_name)
-  emit('room_joined', {'roomName': room_name}, room=room_name)
+
+
+
+@socketio.on("message_on_room")
+def message_on_room(data):
+    username = data["username"]
+    message = data["message_on_room"]
+    datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    room = data["room"]
+    if room not in messages:
+        messages[room] = {"username": [], "datetime": [], "message": []}
+    messages[room]["username"].append(username)
+    messages[room]["datetime"].append(datetime)
+    messages[room]["message"].append(message)
+    emit("message_on_room", {"username": username, "datetime": datetime, "message": message}, room=room)
 
 
 

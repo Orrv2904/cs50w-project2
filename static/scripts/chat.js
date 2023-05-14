@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const socket = io();
   let room;
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date + ' ' + time;
+ 
+  console.log(dateTime)
 
   socket.on("mensaje", (message) => {
     document.querySelector("#root").append(message);
@@ -55,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("message", (data) => {
     console.log(data);
     document.querySelector("#root").innerText += data;
-    document.querySelector("#root").innerHTML += "<br/>";
+    document.querySelector("#root").innerHTML += "<br/><br/>";
+    document.getElementById('datetime').innerHTML = dateTime;
   });
 });
