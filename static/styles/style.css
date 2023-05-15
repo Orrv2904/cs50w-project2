@@ -4,6 +4,11 @@ body {
 	animation: fade-in 0.5s ease-in-out;
 }
 
+li {
+	list-style-type: none;
+  }
+
+
 @keyframes fade-in {
 	from {
 		opacity: 0;
@@ -261,4 +266,19 @@ body {
 .scrollable::-webkit-scrollbar-thumb:hover {
 	background-color: #aaa;
 	/* Color del thumb al pasar el mouse por encima */
+}
+
+.scrollable {
+	height: 400px; /* ajusta la altura según tus necesidades */
+	overflow-y: auto;
+  }
+
+  .form-fixed {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	max-width: 900px;
+	margin: 0 auto;
 }

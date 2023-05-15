@@ -1,29 +1,69 @@
+from functools import wraps
 import os
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, get_flashed_messages
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, get_flashed_messages, session
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from dotenv import load_dotenv
 import json
 load_dotenv()
 
+
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config['SECRET_KEY'] = 'mysecretkey'
 socketio = SocketIO(app)
 
-rooms = {"global": [],
+rooms = {"General Room": [],
          "Web": [],
          "CS": []}
 users = []
-messages = {}
 
-@app.route("/")
+def login_required(f):
+    """
+    Decorate routes to require login.
+    http://flask.pocoo.org/docs/0.12/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("userConnect") is None:
+            print("se limpio")
+            return redirect("/")
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    # return "Project 2: TODO"
-    return render_template("login.html")
+    if request.method == "GET":
+        # return "Project 2: TODO"
+        return render_template("login.html")
+    else:
+        name = request.form.get("name")
+        for names in users:
+            if name == names:
+                print("Nombre de usuario no valido")
+                return render_template("login.html")
+        
+        
+        users.append(name)
+        session["userConnect"] = name
+        return redirect("/chat")
 
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+    users.remove(session["userConnect"])
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
+@login_required
 @app.route("/chat")
 def chat():
     global rooms
-    return render_template("chat.html", rooms=rooms)
+    return render_template("chat.html", rooms=rooms, name_user = session["userConnect"])
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -81,7 +121,6 @@ def register_user(data):
     emit('registration_successful', {'username': username})
 
 
-
 @socketio.on('connect')
 def connect():
     emit('connection_success', {'message': 'Conexión exitosa'})  # Emite un evento de éxito de conexión
@@ -89,24 +128,6 @@ def connect():
 @socketio.on('disconnect')
 def disconnect():
   emit('user_disconnected', {'userId': request.sid})
-
-
-
-
-
-@socketio.on("message_on_room")
-def message_on_room(data):
-    username = data["username"]
-    message = data["message_on_room"]
-    datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    room = data["room"]
-    if room not in messages:
-        messages[room] = {"username": [], "datetime": [], "message": []}
-    messages[room]["username"].append(username)
-    messages[room]["datetime"].append(datetime)
-    messages[room]["message"].append(message)
-    emit("message_on_room", {"username": username, "datetime": datetime, "message": message}, room=room)
-
 
 
 # @socketio.on("message") 
@@ -117,7 +138,17 @@ def message_on_room(data):
 @socketio.on("message") 
 def message(data):
   print(data)
+  diccio = {"Usuario": data["nombre"], "Mensaje": data["message"], "Date": data["dateTime"] }
+  rooms[data["room"]].append(diccio)
+  print(rooms)
   emit("message", data["message"],  broadcast=True)
+
+
+@socketio.on("cargar_mensajes")
+def cargar_mensajes(data):
+    mensajes = rooms[data]
+    emit("cargar_mensajesJS", mensajes)
+
 
 @socketio.on('new_message')
 def new_message(data):

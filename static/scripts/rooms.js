@@ -4,6 +4,23 @@
 $(document).ready(function () {
   var socket = io();
 
+    canalActual = localStorage.getItem("Canales");
+    var roomName = canalActual;
+    var figura = $("#Figura_omar");
+    // Aquí puedes agregar la lógica para unirse a la sala seleccionada
+    console.log(roomName); // Agregar un console.log para verificar
+    $("#name_room").text(roomName);
+    figura.html(` <figure class="image is-48x48 is-32x32-mobile">
+                <img
+                src="https://api.dicebear.com/6.x/identicon/svg?seed=${roomName}"
+                alt="avatar" class="is-rounded"
+              />
+              </figure>
+              `);
+    socket.emit("cargar_mensajes",roomName);
+
+
+
 
   socket.emit('cargar_rooms', "cargar datos");
   socket.on("cargar_rooms2", (data) => {
@@ -16,10 +33,10 @@ $(document).ready(function () {
       console.log(clave);
       var roomName = clave;
       var roomHtml = `
-            <div class="list" id="${roomName} lista_cambiar" value="${roomName}">
+            <li class="list" id="${roomName}" value="${roomName}">
             <a class="list-item active box">
               <div class="media">
-                <div class="media-left">
+                <div class="media-left" >
                   <figure class="image is-48x48 is-32x32-mobile">
                     <img
                     alt="avatar" class="is-rounded"
@@ -37,12 +54,16 @@ $(document).ready(function () {
                 </div>
               </div>
             </a>
-          </div>
+          </li>
     `;
       $('#roomList').append(roomHtml);
     }
 
   });
+
+
+
+
 
 
   $('#roomList').on('click', '.enterRoomBtn', function () {
@@ -83,7 +104,7 @@ $(document).ready(function () {
 
     // Crear una nueva repetición de sala en el HTML
     var roomHtml = `
-        <div class="list" id="lista_cambiar">
+        <li class="list" id="${roomName}" value="${roomName}">
         <a class="list-item active box">
           <div class="media">
             <div class="media-left">
@@ -104,7 +125,7 @@ $(document).ready(function () {
             </div>
           </div>
         </a>
-      </div>
+      </li>
 `;
 
     $('#roomList').on('click', '.enterRoomBtn', function () {
@@ -145,19 +166,28 @@ $(document).ready(function () {
   });
 
   // Manejador de eventos para el botón de unirse a una sala existente
-  $('#roomList').on('click', 'li', function () {
-    var roomName = $(this).find('.user_info span').text();
+  $('#roomList').on('click', 'li', event => {
+    
+
+    var roomName = event.currentTarget.id;
+    var figura = $("#Figura_omar");
     // Aquí puedes agregar la lógica para unirse a la sala seleccionada
-    console.log('Unirse a la sala:', roomName); // Agregar un console.log para verificar
+    console.log(roomName); // Agregar un console.log para verificar
+    $("#name_room").text(roomName);
+    figura.html(` <figure class="image is-48x48 is-32x32-mobile">
+                <img
+                src="https://api.dicebear.com/6.x/identicon/svg?seed=${roomName}"
+                alt="avatar" class="is-rounded"
+              />
+              </figure>
+              `);
+    localStorage.setItem("Canales", roomName);
+    socket.emit("cargar_mensajes",roomName);
+  
   });
 
 
-  $('#roomList').on('click', '.list', function () {
-    var changeRoomDiv = document.querySelectorAll('#lista_cambiar');
-    array.forEach(element => {
-      leave
-    });
-  });
+  
 
   // Función para buscar una sala por nombre y mostrar solo las coincidencias
   $('#search').on('input', function () {
@@ -179,6 +209,50 @@ $(document).ready(function () {
     if (searchValue === '') {
       $('#roomList .list-item').slideDown();
     }
+  });
+
+
+  //Cargar mensajes desde javasr...
+  socket.on('cargar_mensajesJS', function (dataM) {
+    
+    const padre = document.getElementById('agregar-mensaje');
+
+    while (padre.firstChild) {
+      padre.removeChild(padre.firstChild);
+    }
+
+    for (let index = 0; index < dataM.length; index++) {
+      console.log(dataM[index])
+      
+      const div = document.createElement('div');
+      const time = document.createElement('time');
+      const p = document.createElement('p');
+  
+      div.classList.add('bg-gray-100', 'border', 'border-gray-200', 'rounded-lg', 'px-4', 'py-2', 'max-w-lg');
+     
+      time.classList.add('mb-1', 'text-xs', 'font-normal', 'text-black-900', 'sm:order-last', 'sm:mb-0');
+      time.setAttribute('id', 'datetime');
+     
+      p.classList.add('mb-2', 'break-all');
+      p.setAttribute('id', 'root');
+  
+      p.innerText += dataM[index]["Mensaje"];
+      p.innerHTML += "<br/><br/>";
+      time.innerHTML = dataM[index]["Date"];;
+  
+  
+      div.appendChild(time);
+      div.appendChild(p);
+  
+  
+     padre.appendChild(div)
+  
+  
+
+
+
+    }
+
   });
 
 
