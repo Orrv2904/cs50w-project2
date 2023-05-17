@@ -185,7 +185,7 @@ $(document).ready(function () {
     const usuariosUnicos = [...new Set(usuariosEnSala)];
   
     const usuariosText = document.createElement("p");
-    usuariosText.innerText = "Usuarios en el chat";
+    usuariosText.innerText = "Online users";
     usuariosText.classList.add("text-lg", "font-bold", "mb-2");
     usersContainer.appendChild(usuariosText);
   
