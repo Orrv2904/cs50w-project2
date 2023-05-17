@@ -34,30 +34,35 @@ def login_required(f):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        # return "Project 2: TODO"
-        return render_template("login.html")
+        if "userConnect" in session:
+            return redirect("/chat")
+        else:
+            return render_template("login.html")
     else:
         name = request.form.get("name")
         for names in users:
             if name == names:
-                print("Nombre de usuario no valido")
+                print("Nombre de usuario no válido")
                 return render_template("login.html")
-        
         
         users.append(name)
         session["userConnect"] = name
         return redirect("/chat")
 
 
+
 @app.route("/logout")
 def logout():
     """Log user out"""
-    users.remove(session["userConnect"])
+    user = session.get("userConnect")
+    if user in users:
+        users.remove(user)
     # Forget any user_id
     session.clear()
 
     # Redirect user to login form
     return redirect("/")
+
 
 @app.route("/chat")
 @login_required
