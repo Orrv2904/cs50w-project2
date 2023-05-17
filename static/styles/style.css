@@ -288,3 +288,6 @@ li {
 	max-height: 780px; /* Ajusta la altura máxima según tus necesidades */
   }
   
+.profileImage {
+	width: 50px;
+}

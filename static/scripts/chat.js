@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   socket.on("message", (data) => {
     console.log(data);
-    const nombreUsuario = data.nombre; // Obtener el nombre de usuario
+    const nombreUsuario = data.nombre;
   
     const padre = document.querySelector("#agregar-mensaje");
   
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     p.classList.add('mb-2', 'break-all');
     p.setAttribute('id', 'root');
   
-    p.innerText += nombreUsuario + ": " + data.message; // Agregar nombre de usuario al mensaje
+    p.innerText += nombreUsuario + ": " + data.message;
     p.innerHTML += "<br/><br/>";
     time.innerHTML = dateTime;
   

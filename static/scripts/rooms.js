@@ -1,14 +1,9 @@
-// Script to create rooms
-
-
 $(document).ready(function () {
   var socket = io();
-
     canalActual = localStorage.getItem("Canales");
     var roomName = canalActual;
     var figura = $("#Figura_omar");
-    // Aquí puedes agregar la lógica para unirse a la sala seleccionada
-    console.log(roomName); // Agregar un console.log para verificar
+    console.log(roomName);
     $("#name_room").text(roomName);
     figura.html(` <figure class="image is-48x48 is-32x32-mobile">
                 <img
@@ -18,8 +13,6 @@ $(document).ready(function () {
               </figure>
               `);
     socket.emit("cargar_mensajes",roomName);
-
-
 
 
   socket.emit('cargar_rooms', "cargar datos");
@@ -62,47 +55,32 @@ $(document).ready(function () {
   });
 
 
-
-
-
-
   $('#roomList').on('click', '.enterRoomBtn', function () {
-    console.log('Botón "Enter" clickeado'); // Agrega esta línea para verificar si se está ejecutando el controlador de eventos
+    console.log('Botón "Enter" clickeado');
     $('#usernameModal').modal('show');
   });
 
-  // Manejador de eventos para el botón #saveRoomBtn
+
   $('#saveRoomBtn').on('click', function () {
-
-
-
-    // Obtener el nombre de la sala del input del modal
     var roomName = $('#roomNameInput').val();
     if (roomName.trim() === '') {
-
-      // Validar que se haya ingresado un nombre de sala
       swal("¡Error!", "Por favor, ingrese un nombre de sala válido.", "error");
       return;
     }
-
-    // Verificar si la sala ya existe en el localStorage
 
     if ($('#' + roomName.replace(/\s/g, '')).length > 0 || roomName.trim() === '') {
       swal("¡Error!", "El nombre de sala ya está en uso. Por favor, ingrese un nombre de sala único.", "error");
       return;
     }
 
-    // Enviar el nombre de la sala al servidor a través de Socket.IO
     socket.emit('create_room', { 'roomName': roomName });
-    console.log('Nombre de sala enviado:', roomName); // Agregar un console.log para verificar
-    $('#createRoomModal').modal('hide'); // Cerrar el modal después de guardar
+    console.log('Nombre de sala enviado:', roomName);
+    $('#createRoomModal').modal('hide');
   });
 
-  // Manejador de eventos para el evento 'room_created'
+
   socket.on('room_created', function (data) {
     var roomName = data.roomName;
-
-    // Crear una nueva repetición de sala en el HTML
     var roomHtml = `
         <li class="list" id="${roomName}" value="${roomName}">
         <a class="list-item active box">
@@ -129,23 +107,13 @@ $(document).ready(function () {
 `;
 
     $('#roomList').on('click', '.enterRoomBtn', function () {
-      console.log('Botón "Enter" clickeado'); // Agrega esta línea para verificar si se está ejecutando el controlador de eventos
+      console.log('Botón "Enter" clickeado');
       $('#usernameModal').modal('show');
     });
 
-    // Agregar la nueva sala a la lista de salas
+
     $('#roomList').append(roomHtml);
-
-    console.log('Sala creada:', roomName); // Agregar un console.log para verificar
-
-    // Guardar la sala en el localStorage
-    // existingRooms.push(roomName);
-    // localStorage.setItem('rooms', JSON.stringify(existingRooms));
-
-
-
-    // Mostrar una alerta usando SweetAlert para indicar que la sala se creó exitosamente
-    // swal("¡Sala creada!", `Se ha creado la sala "${roomName}" exitosamente.`, "success");
+    console.log('Sala creada:', roomName);
     const Toast = Swal.mixin({
       toast: true,
       position: 'bottom-end',
@@ -157,7 +125,6 @@ $(document).ready(function () {
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
-
     Toast.fire({
       icon: 'success',
       title: `Sala ${roomName} exitosamente`
@@ -165,14 +132,11 @@ $(document).ready(function () {
 
   });
 
-  // Manejador de eventos para el botón de unirse a una sala existente
-  $('#roomList').on('click', 'li', event => {
-    
 
+  $('#roomList').on('click', 'li', event => {
     var roomName = event.currentTarget.id;
     var figura = $("#Figura_omar");
-    // Aquí puedes agregar la lógica para unirse a la sala seleccionada
-    console.log(roomName); // Agregar un console.log para verificar
+    console.log(roomName);
     $("#name_room").text(roomName);
     figura.html(` <figure class="image is-48x48 is-32x32-mobile">
                 <img
@@ -187,59 +151,47 @@ $(document).ready(function () {
   });
 
 
-  
-
-  // Función para buscar una sala por nombre y mostrar solo las coincidencias
   $('#search').on('input', function () {
-    var searchValue = $(this).val().toLowerCase(); // Convertir a minúsculas para comparar
+    var searchValue = $(this).val().toLowerCase();
 
     $('#roomList .list-item').each(function () {
       var roomName = $(this).find('strong').text().toLowerCase();
       if (roomName.includes(searchValue)) {
-        $(this).slideDown(); // Mostrar si hay una coincidencia
+        $(this).slideDown();
         if (roomName === searchValue) {
-          $(this).insertBefore($('#roomList .list-item:first')); // Mover la sala encontrada al principio
+          $(this).insertBefore($('#roomList .list-item:first'));
         }
       } else {
-        $(this).slideUp(); // Ocultar si no hay una coincidencia
+        $(this).slideUp();
       }
     });
-
-    // Si el input está vacío, volver al estado original
     if (searchValue === '') {
       $('#roomList .list-item').slideDown();
     }
   });
 
 
-  //Cargar mensajes desde javasr...
   socket.on('cargar_mensajesJS', function(dataM) {
     const padre = document.getElementById('agregar-mensaje');
     const usersContainer = document.getElementById('users');
   
-    // Limpiar mensajes previos
     while (padre.firstChild) {
       padre.removeChild(padre.firstChild);
     }
   
-    // Limpiar usuarios previos
     usersContainer.innerHTML = '';
   
-    // Crear una lista de usuarios únicos en la sala
     const usuariosEnSala = dataM.map(mensaje => mensaje.Usuario);
     const usuariosUnicos = [...new Set(usuariosEnSala)];
   
-    // Agregar texto "Usuarios en el chat"
     const usuariosText = document.createElement("p");
     usuariosText.innerText = "Usuarios en el chat";
     usuariosText.classList.add("text-lg", "font-bold", "mb-2");
     usersContainer.appendChild(usuariosText);
   
-    // Mostrar usuarios en la sala
     usuariosUnicos.forEach(nombreUsuario => {
-      // Mostrar usuario
       const section = document.createElement("section");
-      section.classList.add("bg-gray-100", "py-8");
+      section.classList.add("bg-gray-100", "py-8", "is-visible-mobile");
   
       const divProfile = document.createElement("div");
       divProfile.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8", "is-rounded");
@@ -247,7 +199,7 @@ $(document).ready(function () {
       profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
   
       const profileImage = document.createElement("img");
-      profileImage.classList.add("w-full");
+      profileImage.classList.add("w-full", "profileImage");
       profileImage.src = `https://api.dicebear.com/6.x/identicon/svg?seed=${nombreUsuario}`;
       profileImage.alt = "Imagen de perfil";
   
@@ -266,7 +218,6 @@ $(document).ready(function () {
       usersContainer.appendChild(section);
     });
   
-    // Mostrar mensajes
     dataM.forEach(mensaje => {
       const div = document.createElement('div');
       const time = document.createElement('time');
@@ -293,6 +244,7 @@ $(document).ready(function () {
       padre.appendChild(div);
     });
   });
+  
   
   
   
