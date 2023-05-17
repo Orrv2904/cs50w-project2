@@ -213,7 +213,7 @@ $(document).ready(function () {
 
 
   //Cargar mensajes desde javasr...
-  socket.on('cargar_mensajesJS', function (dataM) {
+  socket.on('cargar_mensajesJS', function(dataM) {
     const padre = document.getElementById('agregar-mensaje');
     const usersContainer = document.getElementById('users');
   
@@ -225,8 +225,49 @@ $(document).ready(function () {
     // Limpiar usuarios previos
     usersContainer.innerHTML = '';
   
-    // Mostrar mensajes y usuarios
-    for (let index = 0; index < dataM.length; index++) {
+    // Crear una lista de usuarios únicos en la sala
+    const usuariosEnSala = dataM.map(mensaje => mensaje.Usuario);
+    const usuariosUnicos = [...new Set(usuariosEnSala)];
+  
+    // Agregar texto "Usuarios en el chat"
+    const usuariosText = document.createElement("p");
+    usuariosText.innerText = "Usuarios en el chat";
+    usuariosText.classList.add("text-lg", "font-bold", "mb-2");
+    usersContainer.appendChild(usuariosText);
+  
+    // Mostrar usuarios en la sala
+    usuariosUnicos.forEach(nombreUsuario => {
+      // Mostrar usuario
+      const section = document.createElement("section");
+      section.classList.add("bg-gray-100", "py-8");
+  
+      const divProfile = document.createElement("div");
+      divProfile.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8", "is-rounded");
+      const profileCard = document.createElement("div");
+      profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
+  
+      const profileImage = document.createElement("img");
+      profileImage.classList.add("w-full");
+      profileImage.src = `https://api.dicebear.com/6.x/identicon/svg?seed=${nombreUsuario}`;
+      profileImage.alt = "Imagen de perfil";
+  
+      const profileContent = document.createElement("div");
+      profileContent.classList.add("p-4");
+  
+      const profileName = document.createElement("h3");
+      profileName.classList.add("text-lg", "font-bold", "mb-2");
+      profileName.innerText = nombreUsuario;
+  
+      profileContent.appendChild(profileName);
+      profileCard.appendChild(profileImage);
+      profileCard.appendChild(profileContent);
+      divProfile.appendChild(profileCard);
+      section.appendChild(divProfile);
+      usersContainer.appendChild(section);
+    });
+  
+    // Mostrar mensajes
+    dataM.forEach(mensaje => {
       const div = document.createElement('div');
       const time = document.createElement('time');
       const p = document.createElement('p');
@@ -239,47 +280,21 @@ $(document).ready(function () {
       p.classList.add('mb-2', 'break-all');
       p.setAttribute('id', 'root');
   
-      const nombreUsuario = dataM[index]["Usuario"]; // Obtener el nombre de usuario
-      const mensaje = dataM[index]["Mensaje"]; // Obtener el mensaje
+      const nombreUsuario = mensaje.Usuario;
+      const mensajeTexto = mensaje.Mensaje;
   
-      p.innerText += nombreUsuario + ": " + mensaje; // Agregar nombre de usuario al mensaje
+      p.innerText += nombreUsuario + ": " + mensajeTexto;
       p.innerHTML += "<br/><br/>";
-      time.innerHTML = dataM[index]["Date"];
+      time.innerHTML = mensaje.Date;
   
       div.appendChild(time);
       div.appendChild(p);
   
       padre.appendChild(div);
-  
-      // Mostrar usuario
-      const section = document.createElement("section");
-      section.classList.add("bg-gray-100", "py-8");
-  
-      const divProfile = document.createElement("div");
-      divProfile.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8", "is-rounded");
-      const profileCard = document.createElement("div");
-      profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
-  
-      const profileImage = document.createElement("img");
-      profileImage.classList.add("w-full");
-      profileImage.src = `https://api.dicebear.com/6.x/identicon/svg?seed=${nombreUsuario}`; // Reemplaza "dataM[index].ruta_imagen" con la propiedad adecuada que contiene la ruta de la imagen del perfil
-      profileImage.alt = "Imagen de perfil";
-  
-      const profileContent = document.createElement("div");
-      profileContent.classList.add("p-4");
-  
-      const profileName = document.createElement("h3");
-      profileName.classList.add("text-lg", "font-bold", "mb-2");
-      profileName.innerText = nombreUsuario; // Utiliza el nombre de usuario obtenido
-  
-      profileContent.appendChild(profileName);
-      profileCard.appendChild(profileImage);
-      profileCard.appendChild(profileContent);
-      divProfile.appendChild(profileCard);
-      section.appendChild(divProfile);
-      usersContainer.appendChild(section);
-    }
+    });
   });
+  
+  
   
   
   
