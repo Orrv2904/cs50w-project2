@@ -215,21 +215,27 @@ $(document).ready(function () {
   //Cargar mensajes desde javasr...
   socket.on('cargar_mensajesJS', function (dataM) {
     const padre = document.getElementById('agregar-mensaje');
+    const usersContainer = document.getElementById('users');
   
+    // Limpiar mensajes previos
     while (padre.firstChild) {
       padre.removeChild(padre.firstChild);
     }
   
+    // Limpiar usuarios previos
+    usersContainer.innerHTML = '';
+  
+    // Mostrar mensajes y usuarios
     for (let index = 0; index < dataM.length; index++) {
       const div = document.createElement('div');
       const time = document.createElement('time');
       const p = document.createElement('p');
   
       div.classList.add('bg-gray-100', 'border', 'border-gray-200', 'rounded-lg', 'px-4', 'py-2', 'max-w-lg');
-     
+  
       time.classList.add('mb-1', 'text-xs', 'font-normal', 'text-black-900', 'sm:order-last', 'sm:mb-0');
       time.setAttribute('id', 'datetime');
-     
+  
       p.classList.add('mb-2', 'break-all');
       p.setAttribute('id', 'root');
   
@@ -244,29 +250,19 @@ $(document).ready(function () {
       div.appendChild(p);
   
       padre.appendChild(div);
-    }
-  });
   
-  socket.on("cargar_usuariosJS", (usuarios) => {
-    const usersContainer = document.getElementById("users");
-  
-    // Limpiar el contenido previo
-    usersContainer.innerHTML = "";
-  
-    // Iterar sobre los usuarios y crear las secciones correspondientes
-    usuarios.forEach((usuario) => {
+      // Mostrar usuario
       const section = document.createElement("section");
       section.classList.add("bg-gray-100", "py-8");
   
-      const div = document.createElement("div");
-      div.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8");
-  
+      const divProfile = document.createElement("div");
+      divProfile.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8", "is-rounded");
       const profileCard = document.createElement("div");
       profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
   
       const profileImage = document.createElement("img");
       profileImage.classList.add("w-full");
-      profileImage.src = usuario.ruta_imagen; // Reemplaza "usuario.ruta_imagen" con la propiedad adecuada que contiene la ruta de la imagen del usuario
+      profileImage.src = `https://api.dicebear.com/6.x/identicon/svg?seed=${nombreUsuario}`; // Reemplaza "dataM[index].ruta_imagen" con la propiedad adecuada que contiene la ruta de la imagen del perfil
       profileImage.alt = "Imagen de perfil";
   
       const profileContent = document.createElement("div");
@@ -274,16 +270,57 @@ $(document).ready(function () {
   
       const profileName = document.createElement("h3");
       profileName.classList.add("text-lg", "font-bold", "mb-2");
-      profileName.innerText = usuario.nombre; // Reemplaza "usuario.nombre" con la propiedad adecuada que contiene el nombre del usuario
+      profileName.innerText = nombreUsuario; // Utiliza el nombre de usuario obtenido
   
       profileContent.appendChild(profileName);
       profileCard.appendChild(profileImage);
       profileCard.appendChild(profileContent);
-      div.appendChild(profileCard);
-      section.appendChild(div);
+      divProfile.appendChild(profileCard);
+      section.appendChild(divProfile);
       usersContainer.appendChild(section);
-    });
+    }
   });
+  
+  
+  
+  
+  // socket.on("cargar_usuariosJS", (usuarios) => {
+  //   const usersContainer = document.getElementById("users");
+  
+  //   // Limpiar el contenido previo
+  //   usersContainer.innerHTML = "";
+  
+  //   // Iterar sobre los usuarios y crear las secciones correspondientes
+  //   usuarios.forEach((usuario) => {
+  //     const section = document.createElement("section");
+  //     section.classList.add("bg-gray-100", "py-8");
+  
+  //     const div = document.createElement("div");
+  //     div.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8");
+  
+  //     const profileCard = document.createElement("div");
+  //     profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
+  
+  //     const profileImage = document.createElement("img");
+  //     profileImage.classList.add("w-full");
+  //     profileImage.src = usuario.ruta_imagen; // Reemplaza "usuario.ruta_imagen" con la propiedad adecuada que contiene la ruta de la imagen del usuario
+  //     profileImage.alt = "Imagen de perfil";
+  
+  //     const profileContent = document.createElement("div");
+  //     profileContent.classList.add("p-4");
+  
+  //     const profileName = document.createElement("h3");
+  //     profileName.classList.add("text-lg", "font-bold", "mb-2");
+  //     profileName.innerText = usuario.nombre; // Reemplaza "usuario.nombre" con la propiedad adecuada que contiene el nombre del usuario
+  
+  //     profileContent.appendChild(profileName);
+  //     profileCard.appendChild(profileImage);
+  //     profileCard.appendChild(profileContent);
+  //     div.appendChild(profileCard);
+  //     section.appendChild(div);
+  //     usersContainer.appendChild(section);
+  //   });
+  // });
   
   
   

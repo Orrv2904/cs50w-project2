@@ -282,3 +282,9 @@ li {
 	max-width: 900px;
 	margin: 0 auto;
 }
+
+#users {
+	overflow-y: scroll;
+	max-height: 780px; /* Ajusta la altura máxima según tus necesidades */
+  }
+  
