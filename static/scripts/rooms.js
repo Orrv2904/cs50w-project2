@@ -214,16 +214,13 @@ $(document).ready(function () {
 
   //Cargar mensajes desde javasr...
   socket.on('cargar_mensajesJS', function (dataM) {
-    
     const padre = document.getElementById('agregar-mensaje');
-
+  
     while (padre.firstChild) {
       padre.removeChild(padre.firstChild);
     }
-
+  
     for (let index = 0; index < dataM.length; index++) {
-      console.log(dataM[index])
-      
       const div = document.createElement('div');
       const time = document.createElement('time');
       const p = document.createElement('p');
@@ -236,25 +233,61 @@ $(document).ready(function () {
       p.classList.add('mb-2', 'break-all');
       p.setAttribute('id', 'root');
   
-      p.innerText += dataM[index]["Mensaje"];
-      p.innerHTML += "<br/><br/>";
-      time.innerHTML = dataM[index]["Date"];;
+      const nombreUsuario = dataM[index]["Usuario"]; // Obtener el nombre de usuario
+      const mensaje = dataM[index]["Mensaje"]; // Obtener el mensaje
   
+      p.innerText += nombreUsuario + ": " + mensaje; // Agregar nombre de usuario al mensaje
+      p.innerHTML += "<br/><br/>";
+      time.innerHTML = dataM[index]["Date"];
   
       div.appendChild(time);
       div.appendChild(p);
   
-  
-     padre.appendChild(div)
-  
-  
-
-
-
+      padre.appendChild(div);
     }
-
   });
-
+  
+  socket.on("cargar_usuariosJS", (usuarios) => {
+    const usersContainer = document.getElementById("users");
+  
+    // Limpiar el contenido previo
+    usersContainer.innerHTML = "";
+  
+    // Iterar sobre los usuarios y crear las secciones correspondientes
+    usuarios.forEach((usuario) => {
+      const section = document.createElement("section");
+      section.classList.add("bg-gray-100", "py-8");
+  
+      const div = document.createElement("div");
+      div.classList.add("max-w-2xl", "mx-auto", "px-4", "sm:px-6", "lg:px-8");
+  
+      const profileCard = document.createElement("div");
+      profileCard.classList.add("bg-white", "shadow-lg", "rounded-lg", "overflow-hidden");
+  
+      const profileImage = document.createElement("img");
+      profileImage.classList.add("w-full");
+      profileImage.src = usuario.ruta_imagen; // Reemplaza "usuario.ruta_imagen" con la propiedad adecuada que contiene la ruta de la imagen del usuario
+      profileImage.alt = "Imagen de perfil";
+  
+      const profileContent = document.createElement("div");
+      profileContent.classList.add("p-4");
+  
+      const profileName = document.createElement("h3");
+      profileName.classList.add("text-lg", "font-bold", "mb-2");
+      profileName.innerText = usuario.nombre; // Reemplaza "usuario.nombre" con la propiedad adecuada que contiene el nombre del usuario
+  
+      profileContent.appendChild(profileName);
+      profileCard.appendChild(profileImage);
+      profileCard.appendChild(profileContent);
+      div.appendChild(profileCard);
+      section.appendChild(div);
+      usersContainer.appendChild(section);
+    });
+  });
+  
+  
+  
+  
 
 
 

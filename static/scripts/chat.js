@@ -63,34 +63,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   socket.on("message", (data) => {
     console.log(data);
-    padre = document.querySelector("#agregar-mensaje")
-
+    const nombreUsuario = data.nombre; // Obtener el nombre de usuario
+  
+    const padre = document.querySelector("#agregar-mensaje");
+  
     const div = document.createElement('div');
     const time = document.createElement('time');
     const p = document.createElement('p');
-
+  
     div.classList.add('bg-gray-100', 'border', 'border-gray-200', 'rounded-lg', 'px-4', 'py-2', 'max-w-lg');
-   
+  
     time.classList.add('mb-1', 'text-xs', 'font-normal', 'text-black-900', 'sm:order-last', 'sm:mb-0');
     time.setAttribute('id', 'datetime');
-   
+  
     p.classList.add('mb-2', 'break-all');
     p.setAttribute('id', 'root');
-
-    p.innerText += data;
+  
+    p.innerText += nombreUsuario + ": " + data.message; // Agregar nombre de usuario al mensaje
     p.innerHTML += "<br/><br/>";
     time.innerHTML = dateTime;
-
-
+  
     div.appendChild(time);
     div.appendChild(p);
-
-
-   padre.appendChild(div)
-
-
-
+  
+    padre.appendChild(div);
   });
+  
 });
 
 

@@ -59,8 +59,8 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
-@login_required
 @app.route("/chat")
+@login_required
 def chat():
     global rooms
     return render_template("chat.html", rooms=rooms, name_user = session["userConnect"])
@@ -141,13 +141,21 @@ def message(data):
   diccio = {"Usuario": data["nombre"], "Mensaje": data["message"], "Date": data["dateTime"] }
   rooms[data["room"]].append(diccio)
   print(rooms)
-  emit("message", data["message"],  broadcast=True)
+#   emit("message", data["message"],  broadcast=True)
+  emit("message", data, broadcast=True)
+
 
 
 @socketio.on("cargar_mensajes")
 def cargar_mensajes(data):
     mensajes = rooms[data]
     emit("cargar_mensajesJS", mensajes)
+
+
+# @socketio.on("cargar_usuarios")
+# def cargar_usuarios(data):
+#     usuarios = rooms[data]
+#     emit("cargar_usuariosJS", usuarios)
 
 
 @socketio.on('new_message')
