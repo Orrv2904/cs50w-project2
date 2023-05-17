@@ -5,7 +5,7 @@ Web Programming with Python and JavaScript
 
 Este proyecto consiste en una aplicación en donde los usuarios pueden conectarse a salas, crear salas y mandar mensajes en tiempo real.
 
-[Puedes ver el Deploy aquí]()
+[Puedes ver el Deploy aquí](https://flackio.onrender.com/)
 
 
 <input type="hidden" id="tecnologias" value="">
@@ -51,9 +51,15 @@ Los usuarios podran crear salas de chat por medio de un modal.
 El usuario podra enviar mensajes por medio de un chat general y dentro de las salas especificas.
 </details>
 
+##
+
 ## Toque personal
 
-El toque personal que decidi darle fue el envio de emojis y la opcion de buscar salas por medio de un input de busqueda que se encuentra arriba de las salas.
+El toque personal que decidi agregar lo siguiente:
+
+1. Un selector de emojis, que permite seleccionar el emoji y enviarlo por medio del mensaje.
+2. Buscador de salas, para poder buscar las salas dentro de la lista de salas.
+3. Mostrar los usuarios activos y los que enviaron mensajes de cada sala.
 
 ##
 
